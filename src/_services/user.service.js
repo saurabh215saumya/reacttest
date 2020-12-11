@@ -44,13 +44,13 @@ function getAll() {
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
-function getItemAll() {
+function getItemAll(limit) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`https://fakestoreapi.com/products`, requestOptions).then(handleResponse);
+    return fetch(`https://fakestoreapi.com/products?limit=${limit}`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {

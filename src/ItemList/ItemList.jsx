@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { userActions } from '../_actions';
+import Pagination from 'reactjs-hooks-pagination';
 
 function ItemList() {
     const users = useSelector(state => state.users);
     const user = useSelector(state => state.authentication.user);
     const dispatch = useDispatch();
+    const [totalRecords, setTotalRecords] = useState(50);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageLimit, setPageLimit] = useState(10)
 
     useEffect(() => {
-        dispatch(userActions.getItemAll());
-    }, []);
+        dispatch(userActions.getItemAll(pageLimit));
+        //setTotalRecords(users.items.length)
+    }, [currentPage]);
 
     function handleDeleteItem(id) {
-        dispatch(userActions.deleteItem(id));
+        dispatch(user.le);
     }
+    function handleSearch(event) {
+        alert('search')
+        alert(event.target.value)
 
+    }
+    
     // function handleItemDetail(id) {
     //     dispatch(userActions.getItemDetails(id));
     // }
@@ -26,6 +36,7 @@ function ItemList() {
             {/* {JSON.stringify(users.items)} */}
             <h1>Hi {user.firstName}!</h1>
             <p>Item List!!</p>
+            <p><input type="text" name="search" onChange={handleSearch} ></input></p>
             <ul>
             { users  && users.items && users.items.map((user, index) =>
             <div>
@@ -42,7 +53,12 @@ function ItemList() {
                 </table>
             </div>
                     )} 
-            
+             <Pagination
+                        totalRecords={totalRecords}
+                        pageLimit={pageLimit}
+                        pageRangeDisplayed={1}
+                        onChangePage={setCurrentPage}
+                    />
                     </ul>
             <p>
                 <Link to="/login">Logout</Link>

@@ -79,11 +79,11 @@ function getAll() {
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
-function getItemAll() {
+function getItemAll(limit) {
     return dispatch => {
         dispatch(request());
 
-        userService.getItemAll()
+        userService.getItemAll(limit)
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
